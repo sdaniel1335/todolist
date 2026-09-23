@@ -12,7 +12,7 @@ class Pages extends App {
 
     // $this->flash('success', 'Saved successfully.');
 
-    $this->set('title', 'App');
+    $this->set('title', APP_TITLE);
     $this->render('pages/index');
   }
 }
