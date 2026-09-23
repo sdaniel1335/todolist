@@ -1,4 +1,5 @@
 <?php
+define('APP_NAME', 'Todolist');
 define('APP_VER', '0.1.0');
 define('APP_TZ', 'UTC');
 define('APP_ENV', 'dev'); // prod
