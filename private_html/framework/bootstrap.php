@@ -1,7 +1,7 @@
 <?php
 define('FW_VER', '0.1.0');
 define('FW_NAME', 'VC Framework');
-define('FW_URL', 'https://github.com/dsoos1290/vcframework');
+define('FW_PROJECT_URL', 'https://github.com/dsoos1290/vcframework');
 
 if (version_compare(PHP_VERSION, '5.3.0', '<')) {
   die('PHP 5.3.0 or newer is required.');

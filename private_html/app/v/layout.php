@@ -26,7 +26,7 @@
 </main>
 
 <footer>
-  &copy; <?php echo date('Y') . ' ' . APP_TITLE; ?> &middot; Powered by <a href="<?php echo FW_URL; ?>" target="_blank" rel="noopener"><?php echo FW_NAME . (APP_ENV != 'prod' ? ' v' . FW_VER : ''); ?></a>
+  &copy; <?php echo date('Y') . ' ' . APP_TITLE; ?> &middot; Powered by <a href="<?php echo FW_PROJECT_URL; ?>" target="_blank" rel="noopener"><?php echo FW_NAME . (APP_ENV != 'prod' ? ' v' . FW_VER : ''); ?></a>
 </footer>
 
 <script src="<?php echo url('js/app.js'); ?>?v=<?php echo APP_VER; ?><?php echo (APP_ENV != 'prod' ? '&t=' . time() : ''); ?>"></script>
