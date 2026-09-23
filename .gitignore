@@ -1,1 +1,7 @@
 .idea/
+/vendor/
+private_html/app/config/db.php
+private_html/log/*
+!private_html/log/cli/
+private_html/log/cli/*
+!private_html/log/cli/.gitkeep

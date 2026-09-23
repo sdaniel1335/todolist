@@ -1,0 +1,9 @@
+RewriteEngine On
+
+RewriteCond %{THE_REQUEST} \s/+(.*/)?public_html(?:/|\s|\?) [NC]
+RewriteRule ^ - [R=404,L]
+RewriteRule ^public_html(?:/|$) - [L]
+RewriteRule ^index\.php$ - [L]
+RewriteRule ^$ public_html/index.php [L,QSA]
+
+RewriteRule ^(.*)$ public_html/$1 [L]
