@@ -26,6 +26,12 @@ class C
 
   protected function flash($type, $message)
   {
+    if (!defined('APP_SESSION') || !APP_SESSION) {
+      throw new RuntimeException(
+        'Flash messages require APP_SESSION to be enabled.'
+      );
+    }
+
     $_SESSION['_flash'][] = array(
       'type' => $type,
       'message' => $message

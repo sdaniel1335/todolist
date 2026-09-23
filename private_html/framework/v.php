@@ -2,11 +2,17 @@
 
 function url($path = '')
 {
-  if ($path === '' || $path === '/') {
-    return BASE_URL . '/';
+  $base = BASE_URL;
+
+  if (defined('APP_URL') && APP_URL !== '') {
+    $base = rtrim(APP_URL, '/') . BASE_URL;
   }
 
-  return BASE_URL . '/' . ltrim($path, '/');
+  if ($path === '' || $path === '/') {
+    return $base . '/';
+  }
+
+  return $base . '/' . ltrim($path, '/');
 }
 
 function element($element, $data = array())
@@ -31,6 +37,10 @@ function element($element, $data = array())
 
 function flash()
 {
+  if (!defined('APP_SESSION') || !APP_SESSION) {
+    return array();
+  }
+
   $flashes = isset($_SESSION['_flash'])
     ? $_SESSION['_flash']
     : array();

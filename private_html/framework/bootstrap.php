@@ -148,8 +148,10 @@ if (defined('APP_TZ')) {
 }
 
 if (PHP_SAPI !== 'cli' && (!defined('FAKE_CLI') || !FAKE_CLI)) {
-  if (session_id() === '') {
-    session_start();
+  if (defined('APP_SESSION') && APP_SESSION) {
+    if (session_id() === '') {
+      session_start();
+    }
   }
 
   require_once ROOT . DS . PRIV . DS . FW . DS . 'router.php';
