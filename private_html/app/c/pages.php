@@ -6,7 +6,7 @@ class Pages extends App {
 
   public function index() {
     /*
-    $result = $this->db->query("SELECT * FROM posts LIMIT 10");
+    $result = $this->db->query("SELECT * FROM " . $this->table('posts') . " LIMIT 10");
     var_dump($result->fetch_all(MYSQLI_ASSOC));
     */
 

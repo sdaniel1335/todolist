@@ -143,6 +143,11 @@ function db()
   return $db;
 }
 
+function table($table)
+{
+  return (defined('DB_PREFIX') ? DB_PREFIX : '') . $table;
+}
+
 if (defined('APP_TZ')) {
   date_default_timezone_set(APP_TZ);
 }

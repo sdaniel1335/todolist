@@ -11,6 +11,11 @@ class C
     $this->db = db();
   }
 
+  protected function table($table)
+  {
+    return table($table);
+  }
+
   protected function set($key, $value = null)
   {
     if (is_array($key)) {

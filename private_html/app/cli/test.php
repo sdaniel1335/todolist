@@ -13,7 +13,7 @@ if (!isset($options['action']) || trim($options['action']) === '') {
 }
 
 if ($options['action'] == 'insert') {
-  $db->query("INSERT INTO posts () VALUES ()");
+  $db->query("INSERT INTO " . table('posts') . " () VALUES ()");
 
   $id = $db->insert_id;
 
