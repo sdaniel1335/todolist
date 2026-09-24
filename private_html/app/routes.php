@@ -16,6 +16,11 @@ return array(
       'controller' => 'auth',
       'class' => 'Auth',
       'action' => 'password'
+    ),
+    '/todoist' => array(
+      'controller' => 'settings',
+      'class' => 'Settings',
+      'action' => 'todoist'
     )
   ),
   'POST' => array(
@@ -33,6 +38,21 @@ return array(
       'controller' => 'auth',
       'class' => 'Auth',
       'action' => 'passwordPost'
+    ),
+    '/todoist' => array(
+      'controller' => 'settings',
+      'class' => 'Settings',
+      'action' => 'todoistPost'
+    ),
+    '/todoist/task' => array(
+      'controller' => 'todoist',
+      'class' => 'Todoist',
+      'action' => 'taskPost'
+    ),
+    '/todolist/task' => array(
+      'controller' => 'tasks',
+      'class' => 'Tasks',
+      'action' => 'todolistPost'
     )
   )
 );
