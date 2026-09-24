@@ -15,13 +15,17 @@ class Tasks extends App
     $task_id = isset($_POST['task_id']) ? (int) $_POST['task_id'] : 0;
     $user_id = auth_user_id();
 
-    if ($task_id < 1) {
-      $this->flash('error', 'Missing Todolist task ID.');
-      $this->redirect('/');
-    }
-
     try {
-      if ($action === 'delete') {
+      if ($action === 'create') {
+        $this->createLocalTask(
+          $user_id,
+          $this->postContent(),
+          $this->postLabel()
+        );
+        $this->flash('success', 'Todolist task added.');
+      } elseif ($task_id < 1) {
+        throw new RuntimeException('Missing Todolist task ID.');
+      } elseif ($action === 'delete') {
         $this->deleteLocalTask($task_id, $user_id);
         $this->flash('success', 'Todolist task deleted.');
       } elseif ($action === 'update') {
@@ -124,6 +128,18 @@ class Tasks extends App
 
       throw $e;
     }
+  }
+
+  private function createLocalTask($user_id, $content, $label)
+  {
+    $stmt = $this->db->prepare(
+      'INSERT INTO '
+      . $this->table('todolist')
+      . ' (user_id, content, label) VALUES (?, ?, ?)'
+    );
+    $stmt->bind_param('iss', $user_id, $content, $label);
+    $stmt->execute();
+    $stmt->close();
   }
 
   private function deleteLocalTask($task_id, $user_id)

@@ -227,6 +227,44 @@
               </tr>
             <?php } ?>
           <?php } ?>
+
+          <tr>
+            <td>
+              <form id="todolist-task-create" method="post" action="<?php echo url('/todolist/task'); ?>" class="task-edit-form">
+                <input type="hidden" name="_csrf" value="<?php echo htmlspecialchars(auth_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+
+                <input
+                  type="text"
+                  class="form-control form-control-sm task-content"
+                  name="content"
+                  placeholder="New task"
+                  required
+                >
+
+                <select class="form-select form-select-sm task-label-select" name="label" aria-label="Label">
+                  <option value="">-</option>
+                  <option value="B">B</option>
+                  <option value="P">P</option>
+                  <option value="W">W</option>
+                </select>
+              </form>
+            </td>
+            <td class="text-nowrap task-due">
+              &mdash;
+            </td>
+            <td>
+              <div class="task-actions">
+                <button
+                  type="submit"
+                  form="todolist-task-create"
+                  name="action"
+                  value="create"
+                  class="btn btn-primary btn-sm task-icon-btn"
+                  title="Add"
+                ><i class="bi bi-plus-lg"></i><span class="visually-hidden">Add</span></button>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
