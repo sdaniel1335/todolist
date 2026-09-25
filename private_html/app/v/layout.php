@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="<?php echo FW_NAME . (APP_ENV != 'prod' ? ' v' . FW_VER : ''); ?>">
+  <meta name="generator" content="<?php echo APP_NAME . (APP_ENV != 'prod' ? ' v' . APP_VER : ''); ?>">
+  <meta name="framework" content="<?php echo FW_NAME . (APP_ENV != 'prod' ? ' v' . FW_VER : ''); ?>">
   <title><?php echo htmlspecialchars(isset($title) ? $title : APP_TITLE); ?></title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
