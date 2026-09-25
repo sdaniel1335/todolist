@@ -78,6 +78,45 @@ $route = isset($routes[$request_method][$request_path])
   ? $routes[$request_method][$request_path]
   : null;
 
+if ($route === null && isset($routes[$request_method])) {
+  foreach ($routes[$request_method] as $route_path => $candidate) {
+    if (strpos($route_path, '{') === false) {
+      continue;
+    }
+
+    $route_parts = explode('/', trim($route_path, '/'));
+    $request_parts = explode('/', trim($request_path, '/'));
+
+    if (count($route_parts) !== count($request_parts)) {
+      continue;
+    }
+
+    $params = array();
+    $matched = true;
+
+    for ($i = 0; $i < count($route_parts); $i++) {
+      if (preg_match('/^\{([a-zA-Z_][a-zA-Z0-9_]*)\}$/', $route_parts[$i], $matches)) {
+        $params[$matches[1]] = urldecode($request_parts[$i]);
+        continue;
+      }
+
+      if ($route_parts[$i] !== $request_parts[$i]) {
+        $matched = false;
+        break;
+      }
+    }
+
+    if ($matched) {
+      foreach ($params as $key => $value) {
+        $_GET[$key] = $value;
+      }
+
+      $route = $candidate;
+      break;
+    }
+  }
+}
+
 if ($route === null) {
   header('HTTP/1.1 404 Not Found');
   die('Page not found.');
