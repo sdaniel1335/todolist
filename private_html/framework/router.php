@@ -42,6 +42,27 @@ require_once $app_controller_file;
 
 $routes = require $routes_file;
 
+$additional_routes_files = glob(
+  ROOT . DS . PRIV . DS . APP . DS . 'routes_*.php'
+);
+
+if ($additional_routes_files !== false) {
+  sort($additional_routes_files);
+
+  foreach ($additional_routes_files as $additional_routes_file) {
+    $additional_routes = require $additional_routes_file;
+
+    if ( ! is_array($additional_routes)) {
+      die('Invalid routes file: ' . basename($additional_routes_file));
+    }
+
+    $routes = array_replace_recursive(
+      $routes,
+      $additional_routes
+    );
+  }
+}
+
 $request_method = isset($_SERVER['REQUEST_METHOD'])
   ? $_SERVER['REQUEST_METHOD']
   : 'GET';
