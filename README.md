@@ -2,7 +2,7 @@
 
 Lightweight PHP task management application with optional Todoist integration and a simple local task list.
 
-Todolist combines Todoist tasks and locally stored tasks in a single interface. Todoist tasks are displayed with Today tasks first, while local tasks are stored in MySQL and ordered by creation date.
+Todolist combines Todoist tasks and locally stored tasks in a single interface. Todoist tasks are displayed in ascending due-date order, with undated tasks last, while local tasks are stored in MySQL and ordered by creation date.
 
 Tasks can be edited, deleted and moved between Todoist and the local Todolist. Moving a local task to Todoist automatically adds it to Today. Both lists support the predefined **B (Business)**, **P (Personal)** and **W (Work)** labels, which are preserved when tasks are moved between the two lists.
 
@@ -12,7 +12,7 @@ Todolist is built on [VC Framework](https://github.com/dsoos1290/vcframework) an
 
 * Todoist task integration
 * Local MySQL-based task list
-* Todoist Today tasks displayed first
+* Todoist tasks ordered by due date, with undated tasks last
 * Today task highlighting
 * Complete Todoist tasks
 * Edit and delete Todoist tasks
@@ -66,7 +66,7 @@ Todoist integration is optional. Without a Todoist API key, the local Todolist c
 When Todoist integration is enabled:
 
 * Active Todoist tasks are displayed above the local Todolist.
-* Today tasks are displayed first and marked as Today.
+* Tasks are ordered by due date, with undated tasks last; today's tasks are marked as Today.
 * Todoist tasks can be completed, edited or deleted.
 * Tasks can be moved from Todoist to the local Todolist.
 * Local tasks can be moved to Todoist and are automatically assigned to Today.

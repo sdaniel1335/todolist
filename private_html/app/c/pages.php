@@ -31,23 +31,26 @@ class Pages extends App
           }
         }
 
-        $today_first = array();
-        $other_tasks = array();
+        $due_dates = array();
+        $positions = array();
 
-        foreach ($todoist_tasks as $task) {
+        foreach ($todoist_tasks as $position => &$task) {
           $task['_managed_label'] = $todoist->taskLabel($task);
-
-          if (
-            isset($task['id'])
-            && isset($todoist_today_ids[(string) $task['id']])
-          ) {
-            $today_first[] = $task;
-          } else {
-            $other_tasks[] = $task;
-          }
+          $due_dates[] = isset($task['due']['date']) && $task['due']['date'] !== ''
+            ? $task['due']['date']
+            : '9999-12-31T23:59:59';
+          $positions[] = $position;
         }
+        unset($task);
 
-        $todoist_tasks = array_merge($today_first, $other_tasks);
+        if (!empty($todoist_tasks)) {
+          // Keep Todoist's original order when due dates are equal.
+          array_multisort(
+            $due_dates, SORT_ASC, SORT_STRING,
+            $positions, SORT_ASC, SORT_NUMERIC,
+            $todoist_tasks
+          );
+        }
       } catch (Exception $e) {
         $todoist_error = $e->getMessage();
       }
