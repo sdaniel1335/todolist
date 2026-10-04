@@ -1,0 +1,36 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: 'Upload application files (leave disabled to check FTP only)'
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ftp-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out application
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check FTP or upload application
+        env:
+          FTP_HOST: ${{ vars.FTP_HOST || '208.82.114.165' }}
+          FTP_USER: ${{ vars.FTP_USER || 'danielco' }}
+          FTP_DEPLOY_DIR: ${{ vars.FTP_DEPLOY_DIR || '/home/danielco/public_html/todolist/' }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          DEPLOY_UPLOAD: ${{ inputs.upload }}
+        run: python3 .github/scripts/ftp_deploy.py

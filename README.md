@@ -71,3 +71,33 @@ When Todoist integration is enabled:
 * Tasks can be moved from Todoist to the local Todolist.
 * Local tasks can be moved to Todoist and are automatically assigned to Today.
 * B (Business), P (Personal) and W (Work) labels are transferred between the two lists.
+## Manual FTP deployment from GitHub
+
+The **Deploy** workflow runs only when manually started on `main`. It uses plain,
+unencrypted FTP in passive mode. Credentials and uploaded content are not
+protected by TLS.
+
+1. Merge the deployment workflow into `main`.
+2. In **Settings → Secrets and variables → Actions → New repository secret**,
+   create `FTP_PASSWORD` with the FTP account password. Never commit it.
+3. The defaults are host `208.82.114.165`, username `danielco`, port `21`, and
+   target `/home/danielco/public_html/todolist/`. To override them, add repository
+   variables `FTP_HOST`, `FTP_USER`, or `FTP_DEPLOY_DIR` in the same settings.
+   The target must already exist. If the FTP account is jailed, use the path
+   visible in your FTP client, for example `/public_html/todolist/`.
+4. Open **Actions → Deploy → Run workflow**, select `main`, and leave
+   **Upload application files** disabled for the first run. This checks login,
+   the target directory and passive data transfer without writing files.
+5. After that check passes, run it again with **Upload application files** enabled.
+
+Uploads preserve the repository layout and include the root `index.php` and
+`.htaccess`, `public_html/`, `private_html/app/`, and `private_html/framework/`.
+The live `private_html/app/config/db.php`, logs, Git metadata, workflows,
+documentation and `install.sql` are excluded. Existing application files are
+overwritten and uploaded sizes are checked; remote files are never deleted and
+SQL is never imported. Keep the existing production database configuration.
+
+Deployment is not atomic: a failed upload can leave some application files
+updated. Keep a backup before deployment and inspect the site after a successful
+run. No live FTP connection has been verified from GitHub until the first check
+workflow succeeds.
