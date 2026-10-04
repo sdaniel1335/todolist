@@ -47,6 +47,13 @@ body {
   border-bottom: 0;
 }
 
+.task-table > tbody > .task-create-row > td {
+  --bs-table-bg: var(--bs-primary-bg-subtle);
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 2px solid var(--bs-border-color);
+}
+
 .task-done-col,
 .task-done-cell,
 .task-status-col,
