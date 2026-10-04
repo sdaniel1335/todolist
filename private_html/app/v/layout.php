@@ -12,7 +12,6 @@
   <link rel="icon" href="<?php echo url('favicon.ico'); ?>">
 </head>
 <body class="js">
-lacsama
 
 <header>
   <?php element('nav'); ?>

@@ -29,7 +29,7 @@ class Todoist extends App
     $action = isset($_POST['action']) ? $_POST['action'] : '';
     $task_id = isset($_POST['task_id']) ? trim($_POST['task_id']) : '';
 
-    if ($task_id === '') {
+    if ($action !== 'create' && $task_id === '') {
       $this->flash('error', 'Missing Todoist task ID.');
       $this->redirect('/');
     }
@@ -40,7 +40,14 @@ class Todoist extends App
     }
 
     try {
-      if ($action === 'complete') {
+      if ($action === 'create') {
+        $this->createTask(
+          $this->postContent(),
+          $this->postLabel(),
+          true
+        );
+        $this->flash('success', 'Todoist task added to Today.');
+      } elseif ($action === 'complete') {
         $this->closeTask($task_id);
         $this->flash('success', 'Todoist task completed.');
       } elseif ($action === 'delete') {

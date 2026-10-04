@@ -130,6 +130,44 @@
                 </tr>
               <?php } ?>
             <?php } ?>
+            <tr>
+              <td></td>
+              <td>
+                <form id="todoist-task-create" method="post" action="<?php echo url('/todoist/task'); ?>" class="task-edit-form">
+                  <input type="hidden" name="_csrf" value="<?php echo htmlspecialchars(auth_csrf_token(), ENT_QUOTES, 'UTF-8'); ?>">
+                  <input type="hidden" name="action" value="create">
+
+                  <input
+                    type="text"
+                    class="form-control form-control-sm task-content"
+                    name="content"
+                    placeholder="New Todoist task"
+                    aria-label="New Todoist task"
+                    required
+                  >
+
+                  <select class="form-select form-select-sm task-label-select" name="label" aria-label="Label">
+                    <option value="">-</option>
+                    <option value="B">B</option>
+                    <option value="P">P</option>
+                    <option value="W">W</option>
+                  </select>
+                </form>
+              </td>
+              <td>
+                <span class="badge rounded-pill text-bg-primary task-today">Today</span>
+              </td>
+              <td>
+                <div class="task-actions">
+                  <button
+                    type="submit"
+                    form="todoist-task-create"
+                    class="btn btn-primary btn-sm task-icon-btn"
+                    title="Add to Todoist Today"
+                  ><i class="bi bi-plus-lg"></i><span class="visually-hidden">Add to Todoist Today</span></button>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
