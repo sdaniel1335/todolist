@@ -112,6 +112,17 @@ body {
   width: 145px;
 }
 
+.task-due-editor {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.task-due-editor .task-due-input {
+  flex: 0 0 145px;
+}
+
 .task-empty-row td {
   padding: 1rem;
   text-align: center;

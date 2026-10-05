@@ -1,3 +1,11 @@
+<?php
+  $badge_date = new DateTime('now', new DateTimeZone('Europe/Budapest'));
+  $relative_due_dates = array($badge_date->format('Y-m-d') => 'Today');
+  $badge_date->modify('-1 day');
+  $relative_due_dates[$badge_date->format('Y-m-d')] = 'Yesterday';
+  $badge_date->modify('+2 days');
+  $relative_due_dates[$badge_date->format('Y-m-d')] = 'Tomorrow';
+?>
 <div class="container py-3 task-page">
   <div class="d-flex align-items-center justify-content-between mb-3">
     <h1 class="h4 mb-0"><?php echo htmlspecialchars($title, ENT_QUOTES, 'UTF-8'); ?></h1>
@@ -77,7 +85,6 @@
               <?php foreach ($todoist_tasks as $task) { ?>
                 <?php
                   $task_id = isset($task['id']) ? (string) $task['id'] : '';
-                  $is_today = isset($todoist_today_ids[$task_id]);
                   $label = isset($task['_managed_label'])
                     ? $task['_managed_label']
                     : '';
@@ -122,17 +129,19 @@
                     </form>
                   </td>
                   <td>
-                    <input
-                      type="date"
-                      class="form-control form-control-sm task-due-input"
-                      name="due_date"
-                      form="<?php echo htmlspecialchars($form_id, ENT_QUOTES, 'UTF-8'); ?>"
-                      value="<?php echo htmlspecialchars($due, ENT_QUOTES, 'UTF-8'); ?>"
-                      aria-label="Due date"
-                    >
-                    <?php if ($is_today) { ?>
-                      <span class="badge rounded-pill text-bg-primary task-today mt-1">Today</span>
-                    <?php } ?>
+                    <div class="task-due-editor">
+                      <input
+                        type="date"
+                        class="form-control form-control-sm task-due-input"
+                        name="due_date"
+                        form="<?php echo htmlspecialchars($form_id, ENT_QUOTES, 'UTF-8'); ?>"
+                        value="<?php echo htmlspecialchars($due, ENT_QUOTES, 'UTF-8'); ?>"
+                        aria-label="Due date"
+                      >
+                      <?php if (isset($relative_due_dates[$due])) { ?>
+                        <span class="badge rounded-pill task-today <?php echo $relative_due_dates[$due] === 'Yesterday' ? 'text-bg-warning' : ($relative_due_dates[$due] === 'Today' ? 'text-bg-primary' : 'text-bg-secondary'); ?>"><?php echo $relative_due_dates[$due]; ?></span>
+                      <?php } ?>
+                    </div>
                   </td>
                   <td>
                     <div class="task-actions">
