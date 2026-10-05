@@ -85,9 +85,7 @@
 
                   if (isset($task['due']) && is_array($task['due'])) {
                     if (isset($task['due']['date'])) {
-                      $due = $task['due']['date'];
-                    } elseif (isset($task['due']['string'])) {
-                      $due = $task['due']['string'];
+                      $due = substr($task['due']['date'], 0, 10);
                     }
                   }
 
@@ -124,12 +122,16 @@
                     </form>
                   </td>
                   <td>
+                    <input
+                      type="date"
+                      class="form-control form-control-sm task-due-input"
+                      name="due_date"
+                      form="<?php echo htmlspecialchars($form_id, ENT_QUOTES, 'UTF-8'); ?>"
+                      value="<?php echo htmlspecialchars($due, ENT_QUOTES, 'UTF-8'); ?>"
+                      aria-label="Due date"
+                    >
                     <?php if ($is_today) { ?>
-                      <span class="badge rounded-pill text-bg-primary task-today">Today</span>
-                    <?php } elseif ($due !== '') { ?>
-                      <span class="task-due"><?php echo htmlspecialchars($due, ENT_QUOTES, 'UTF-8'); ?></span>
-                    <?php } else { ?>
-                      <span class="text-muted">&mdash;</span>
+                      <span class="badge rounded-pill text-bg-primary task-today mt-1">Today</span>
                     <?php } ?>
                   </td>
                   <td>

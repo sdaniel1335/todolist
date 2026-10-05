@@ -108,6 +108,10 @@ body {
   font-size: 0.78rem;
 }
 
+.task-due-input {
+  width: 145px;
+}
+
 .task-empty-row td {
   padding: 1rem;
   text-align: center;

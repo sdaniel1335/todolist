@@ -57,7 +57,8 @@ class Todoist extends App
         $this->updateTask(
           $task_id,
           $this->postContent(),
-          $this->postLabel()
+          $this->postLabel(),
+          $this->postDueDate()
         );
         $this->flash('success', 'Todoist task updated.');
       } elseif ($action === 'to_todolist') {
@@ -130,7 +131,7 @@ class Todoist extends App
     );
   }
 
-  public function updateTask($task_id, $content, $label = '')
+  public function updateTask($task_id, $content, $label = '', $due_date = null)
   {
     $this->requireApiKey();
 
@@ -151,14 +152,21 @@ class Todoist extends App
       $labels[] = $label;
     }
 
-    return $this->request(
-      'POST',
-      '/tasks/' . rawurlencode($task_id),
-      array(
-        'content' => $content,
-        'labels' => $labels
-      )
-    );
+    $data = array('content' => $content, 'labels' => $labels);
+    $current_due_date = isset($task['due']['date'])
+      ? substr($task['due']['date'], 0, 10)
+      : '';
+
+    // Preserve existing times and recurrence when the date is unchanged.
+    if ($due_date !== null && $due_date !== $current_due_date) {
+      if ($due_date === '') {
+        $data['due_string'] = 'no date';
+      } else {
+        $data['due_date'] = $due_date;
+      }
+    }
+
+    return $this->request('POST', '/tasks/' . rawurlencode($task_id), $data);
   }
 
   public function closeTask($task_id)
@@ -238,6 +246,28 @@ class Todoist extends App
     $label = isset($_POST['label']) ? trim($_POST['label']) : '';
 
     return $this->normalizeLabel($label);
+  }
+
+  private function postDueDate()
+  {
+    if (!isset($_POST['due_date'])) {
+      return null;
+    }
+
+    $date = trim($_POST['due_date']);
+
+    if ($date === '') {
+      return '';
+    }
+
+    if (
+      !preg_match('/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/', $date, $parts)
+      || !checkdate((int) $parts[2], (int) $parts[3], (int) $parts[1])
+    ) {
+      throw new RuntimeException('Invalid due date.');
+    }
+
+    return $date;
   }
 
   private function normalizeLabel($label)
