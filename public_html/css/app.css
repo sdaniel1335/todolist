@@ -1,6 +1,173 @@
 body {
-  background-color: white;
-  color: black;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f6f8fb;
+  color: #243247;
+}
+
+body > header {
+  background: #fff;
+  border-bottom: 1px solid #e3e8ef;
+}
+
+.app-nav {
+  min-height: 76px;
+  max-width: 1200px;
+}
+
+.app-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: #243247;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.025em;
+}
+
+.app-brand-icon,
+.login-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf1ff;
+  color: #245bcc;
+  border-radius: 0.75rem;
+}
+
+.app-brand-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.app-user {
+  color: #64748b;
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.app-nav-link,
+.app-nav .app-logout {
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.5rem;
+  color: #526176;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.app-nav-link:hover,
+.app-nav .app-logout:hover {
+  background: #edf3ff;
+  color: #245bcc;
+}
+
+.app-nav a:focus-visible,
+.app-nav button:focus-visible,
+body > footer a:focus-visible {
+  outline: 3px solid #245bcc;
+  outline-offset: 3px;
+}
+
+body > main {
+  flex: 1 0 auto;
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+}
+
+body > footer {
+  margin-top: auto;
+  padding: 1.25rem max(1rem, calc((100% - 1176px) / 2));
+  border-top: 1px solid #e3e8ef;
+  background: #fff;
+  color: #64748b;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+body > footer a {
+  color: #526176;
+  text-underline-offset: 0.2em;
+}
+
+body > footer a:hover {
+  color: #245bcc;
+}
+
+.login-page {
+  max-width: 440px;
+  margin: clamp(1rem, 6vh, 4rem) auto;
+}
+
+.login-card {
+  padding: 2.25rem;
+  border: 1px solid #e3e8ef;
+  border-radius: 1.1rem;
+  background: #fff;
+  box-shadow: 0 12px 36px rgba(36, 50, 71, 0.06);
+}
+
+.login-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1.25rem;
+  font-size: 1.4rem;
+}
+
+.login-card h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.login-card .form-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.login-card .form-control {
+  min-height: 46px;
+  border-color: #cbd5e1;
+  border-radius: 0.6rem;
+}
+
+.login-card .form-control:focus {
+  border-color: #245bcc;
+  box-shadow: 0 0 0 0.2rem rgba(36, 91, 204, 0.15);
+}
+
+.login-submit {
+  width: 100%;
+  min-height: 46px;
+  margin-top: 0.5rem;
+  border-radius: 0.6rem;
+  font-weight: 600;
+  --bs-btn-bg: #245bcc;
+  --bs-btn-border-color: #245bcc;
+}
+
+@media (max-width: 575.98px) {
+  .app-nav {
+    min-height: 68px;
+  }
+
+  .app-user {
+    flex-basis: calc(100% - 160px);
+    text-align: right;
+  }
+
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  body > main {
+    padding-top: 0.75rem;
+  }
 }
 
 .task-page {
