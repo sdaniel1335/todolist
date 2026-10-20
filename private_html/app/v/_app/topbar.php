@@ -55,6 +55,7 @@ uksort($modules, 'strcasecmp');
       var remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
       if (remaining === 0) {
         badge.textContent = 'Session: refresh to check';
+        badge.style.backgroundColor = '#FF0000';
         return;
       }
       var minutes = Math.floor(remaining / 60);
