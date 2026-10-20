@@ -12,6 +12,7 @@
   <link rel="icon" href="<?php echo url('favicon.ico'); ?>">
 </head>
 <body class="js">
+<?php element('topbar'); ?>
 
 <header>
   <?php element('nav'); ?>
