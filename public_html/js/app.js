@@ -25,7 +25,7 @@ var App = {
       var form = $(this);
       var message = form.data('submit-confirm')
         || form.data('confirm')
-        || 'Are you sure?';
+        || $('body').attr('data-confirm');
 
       form.removeData('submit-confirm');
 
@@ -37,7 +37,7 @@ var App = {
     $(document).on('change', '.js-confirm-checkbox', function () {
       var checkbox = this;
       var form = $(checkbox).closest('form');
-      var message = form.data('confirm') || 'Are you sure?';
+      var message = form.data('confirm') || $('body').attr('data-confirm');
 
       if (!checkbox.checked) {
         return;

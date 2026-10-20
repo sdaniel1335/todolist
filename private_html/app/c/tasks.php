@@ -22,12 +22,12 @@ class Tasks extends App
           $this->postContent(),
           $this->postLabel()
         );
-        $this->flash('success', 'Todolist task added.');
+        $this->flash('success', lang('TODOLIST_TASK_ADDED'));
       } elseif ($task_id < 1) {
-        throw new RuntimeException('Missing Todolist task ID.');
+        throw new RuntimeException(lang('MISSING_TODOLIST_TASK_ID'));
       } elseif ($action === 'delete') {
         $this->deleteLocalTask($task_id, $user_id);
-        $this->flash('success', 'Todolist task deleted.');
+        $this->flash('success', lang('TODOLIST_TASK_DELETED'));
       } elseif ($action === 'update') {
         $this->updateLocalTask(
           $task_id,
@@ -35,12 +35,12 @@ class Tasks extends App
           $this->postContent(),
           $this->postLabel()
         );
-        $this->flash('success', 'Todolist task updated.');
+        $this->flash('success', lang('TODOLIST_TASK_UPDATED'));
       } elseif ($action === 'to_todoist') {
         $api_key = $this->getTodoistApiKey($user_id);
 
         if ($api_key === '') {
-          throw new RuntimeException('Set your Todoist API key first.');
+          throw new RuntimeException(lang('SET_YOUR_TODOIST_API_KEY_FIRST'));
         }
 
         $this->moveTodolistToTodoist(
@@ -50,9 +50,9 @@ class Tasks extends App
           $this->postContent(),
           $this->postLabel()
         );
-        $this->flash('success', 'Task moved to Todoist Today.');
+        $this->flash('success', lang('TASK_MOVED_TO_TODOIST_TODAY'));
       } else {
-        $this->flash('error', 'Unknown Todolist action.');
+        $this->flash('error', lang('UNKNOWN_TODOLIST_ACTION'));
       }
     } catch (Exception $e) {
       $this->flash('error', $e->getMessage());
@@ -84,13 +84,13 @@ class Tasks extends App
       $stmt->close();
 
       if (!$found) {
-        throw new RuntimeException('Todolist task not found.');
+        throw new RuntimeException(lang('TODOLIST_TASK_NOT_FOUND'));
       }
 
       $created = $api->createTask($content, $label, true);
 
       if (!is_array($created) || !isset($created['id'])) {
-        throw new RuntimeException('Todoist did not return the created task ID.');
+        throw new RuntimeException(lang('TODOIST_DID_NOT_RETURN_THE_CREATED_TASK_ID'));
       }
 
       $created_todoist_id = (string) $created['id'];
@@ -105,7 +105,7 @@ class Tasks extends App
 
       if ($stmt->affected_rows !== 1) {
         $stmt->close();
-        throw new RuntimeException('Todolist task could not be removed after moving.');
+        throw new RuntimeException(lang('TODOLIST_TASK_COULD_NOT_BE_REMOVED_AFTER_MOVING'));
       }
 
       $stmt->close();
@@ -121,7 +121,7 @@ class Tasks extends App
         } catch (Exception $cleanup_exception) {
           throw new RuntimeException(
             $e->getMessage()
-            . ' The created Todoist task could not be cleaned up automatically.'
+            . lang('THE_CREATED_TODOIST_TASK_COULD_NOT_BE_CLEANED_UP_AUTOMATICALLY')
           );
         }
       }
@@ -154,7 +154,7 @@ class Tasks extends App
 
     if ($stmt->affected_rows !== 1) {
       $stmt->close();
-      throw new RuntimeException('Todolist task not found.');
+      throw new RuntimeException(lang('TODOLIST_TASK_NOT_FOUND'));
     }
 
     $stmt->close();
@@ -188,7 +188,7 @@ class Tasks extends App
 
       if (!$exists) {
         $stmt->close();
-        throw new RuntimeException('Todolist task not found.');
+        throw new RuntimeException(lang('TODOLIST_TASK_NOT_FOUND'));
       }
     }
 
@@ -200,7 +200,7 @@ class Tasks extends App
     $content = isset($_POST['content']) ? trim($_POST['content']) : '';
 
     if ($content === '') {
-      throw new RuntimeException('Task content is required.');
+      throw new RuntimeException(lang('TASK_CONTENT_IS_REQUIRED'));
     }
 
     return $content;
@@ -217,7 +217,7 @@ class Tasks extends App
     }
 
     if (!in_array($label, array('B', 'P', 'W'), true)) {
-      throw new RuntimeException('Invalid task label.');
+      throw new RuntimeException(lang('INVALID_TASK_LABEL'));
     }
 
     return $label;

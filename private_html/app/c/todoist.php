@@ -30,12 +30,12 @@ class Todoist extends App
     $task_id = isset($_POST['task_id']) ? trim($_POST['task_id']) : '';
 
     if ($action !== 'create' && $task_id === '') {
-      $this->flash('error', 'Missing Todoist task ID.');
+      $this->flash('error', lang('MISSING_TODOIST_TASK_ID'));
       $this->redirect('/');
     }
 
     if (!$this->hasApiKey()) {
-      $this->flash('error', 'Set your Todoist API key first.');
+      $this->flash('error', lang('SET_YOUR_TODOIST_API_KEY_FIRST'));
       $this->redirect('/todoist');
     }
 
@@ -46,13 +46,13 @@ class Todoist extends App
           $this->postLabel(),
           true
         );
-        $this->flash('success', 'Todoist task added to Today.');
+        $this->flash('success', lang('TODOIST_TASK_ADDED_TO_TODAY'));
       } elseif ($action === 'complete') {
         $this->closeTask($task_id);
-        $this->flash('success', 'Todoist task completed.');
+        $this->flash('success', lang('TODOIST_TASK_COMPLETED'));
       } elseif ($action === 'delete') {
         $this->deleteTask($task_id);
-        $this->flash('success', 'Todoist task deleted.');
+        $this->flash('success', lang('TODOIST_TASK_DELETED'));
       } elseif ($action === 'update') {
         $this->updateTask(
           $task_id,
@@ -60,16 +60,16 @@ class Todoist extends App
           $this->postLabel(),
           $this->postDueDate()
         );
-        $this->flash('success', 'Todoist task updated.');
+        $this->flash('success', lang('TODOIST_TASK_UPDATED'));
       } elseif ($action === 'to_todolist') {
         $this->moveToTodolist(
           $task_id,
           $this->postContent(),
           $this->postLabel()
         );
-        $this->flash('success', 'Task moved to Todolist.');
+        $this->flash('success', lang('TASK_MOVED_TO_TODOLIST'));
       } else {
-        $this->flash('error', 'Unknown Todoist action.');
+        $this->flash('error', lang('UNKNOWN_TODOIST_ACTION'));
       }
     } catch (Exception $e) {
       $this->flash('error', $e->getMessage());
@@ -235,7 +235,7 @@ class Todoist extends App
     $content = isset($_POST['content']) ? trim($_POST['content']) : '';
 
     if ($content === '') {
-      throw new RuntimeException('Task content is required.');
+      throw new RuntimeException(lang('TASK_CONTENT_IS_REQUIRED'));
     }
 
     return $content;
@@ -264,7 +264,7 @@ class Todoist extends App
       !preg_match('/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/', $date, $parts)
       || !checkdate((int) $parts[2], (int) $parts[3], (int) $parts[1])
     ) {
-      throw new RuntimeException('Invalid due date.');
+      throw new RuntimeException(lang('INVALID_DUE_DATE'));
     }
 
     return $date;
@@ -279,7 +279,7 @@ class Todoist extends App
     }
 
     if (!in_array($label, array('B', 'P', 'W'), true)) {
-      throw new RuntimeException('Invalid task label.');
+      throw new RuntimeException(lang('INVALID_TASK_LABEL'));
     }
 
     return $label;
@@ -314,7 +314,7 @@ class Todoist extends App
   private function requireApiKey()
   {
     if (!$this->hasApiKey()) {
-      throw new RuntimeException('Set your Todoist API key first.');
+      throw new RuntimeException(lang('SET_YOUR_TODOIST_API_KEY_FIRST'));
     }
   }
 
@@ -333,7 +333,7 @@ class Todoist extends App
       $response = $this->request('GET', $path, null, $query);
 
       if (!isset($response['results']) || !is_array($response['results'])) {
-        throw new RuntimeException('Unexpected response from Todoist.');
+        throw new RuntimeException(lang('UNEXPECTED_RESPONSE_FROM_TODOIST'));
       }
 
       foreach ($response['results'] as $item) {
@@ -351,7 +351,7 @@ class Todoist extends App
   private function request($method, $path, $data = null, $query = array())
   {
     if (!function_exists('curl_init')) {
-      throw new RuntimeException('The cURL PHP extension is required for Todoist.');
+      throw new RuntimeException(lang('THE_CURL_PHP_EXTENSION_IS_REQUIRED_FOR_TODOIST'));
     }
 
     $url = $this->base_url . $path;
@@ -383,7 +383,7 @@ class Todoist extends App
 
       if ($payload === false) {
         curl_close($ch);
-        throw new RuntimeException('Could not encode Todoist request.');
+        throw new RuntimeException(lang('COULD_NOT_ENCODE_TODOIST_REQUEST'));
       }
 
       $headers[] = 'Content-Type: application/json';
@@ -396,14 +396,14 @@ class Todoist extends App
     if ($body === false) {
       $error = curl_error($ch);
       curl_close($ch);
-      throw new RuntimeException('Todoist request failed: ' . $error);
+      throw new RuntimeException(lang('TODOIST_REQUEST_FAILED') . $error);
     }
 
     $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
     if ($status < 200 || $status >= 300) {
-      $message = 'Todoist API returned HTTP ' . $status . '.';
+      $message = lang('TODOIST_API_RETURNED_HTTP') . $status . '.';
       $decoded_error = json_decode($body, true);
 
       if (is_array($decoded_error)) {
@@ -424,7 +424,7 @@ class Todoist extends App
     $decoded = json_decode($body, true);
 
     if ($decoded === null && trim($body) !== 'null') {
-      throw new RuntimeException('Could not decode Todoist response.');
+      throw new RuntimeException(lang('COULD_NOT_DECODE_TODOIST_RESPONSE'));
     }
 
     return $decoded;

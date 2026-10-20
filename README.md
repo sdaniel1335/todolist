@@ -43,6 +43,8 @@ When connected, Todoist tasks appear above local tasks. You can manage Todoist t
 ## Configuration
 
 * Application settings: `private_html/app/config/app.php`.
+* Interface language: set `APP_LANG` to `hu` (default) or `en` in the application settings.
+* Translation dictionaries: `private_html/app/config/lang_hu.php` and `private_html/app/config/lang_en.php`, using scalar constants such as `LANG_HU_WEEK` and `LANG_EN_WEEK`. The helpers in `private_html/app/c/lang.php` select the language from `APP_LANG`: use `lang('WEEK')` for plain text or `lang_html('WEEK')` for HTML output. Unsupported languages fall back to English.
 * Database settings: `private_html/app/config/db.php`.
 * Todoist API token: configure through the authenticated application interface.
 

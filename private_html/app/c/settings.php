@@ -23,7 +23,7 @@ class Settings extends App
 
     $this->set(
       array(
-        'title' => 'Todoist API key',
+        'title' => lang('TODOIST_API_KEY'),
         'has_api_key' => (bool) $has_api_key
       )
     );
@@ -41,12 +41,12 @@ class Settings extends App
       : '';
 
     if ($api_key === '') {
-      $this->flash('error', 'The Todoist API key is required.');
+      $this->flash('error', lang('THE_TODOIST_API_KEY_IS_REQUIRED'));
       $this->redirect('/todoist');
     }
 
     if (strlen($api_key) > 255) {
-      $this->flash('error', 'The Todoist API key is too long.');
+      $this->flash('error', lang('THE_TODOIST_API_KEY_IS_TOO_LONG'));
       $this->redirect('/todoist');
     }
 
@@ -63,7 +63,7 @@ class Settings extends App
     $stmt->execute();
     $stmt->close();
 
-    $this->flash('success', 'Todoist API key saved.');
+    $this->flash('success', lang('TODOIST_API_KEY_SAVED'));
     $this->redirect('/todoist');
   }
 }

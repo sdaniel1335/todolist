@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="<?php echo APP_LANG; ?>">
+<html lang="<?php echo htmlspecialchars(APP_LANG, ENT_QUOTES, 'UTF-8'); ?>">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
   <link href="<?php echo url('css/app.css'); ?>?v=<?php echo APP_VER; ?><?php echo (APP_ENV != 'prod' ? '&t=' . time() : ''); ?>" rel="stylesheet">
   <link rel="icon" href="<?php echo url('favicon.ico'); ?>">
 </head>
-<body class="js">
+<body class="js" data-confirm="<?php echo lang_html('ARE_YOU_SURE'); ?>">
 <?php element('topbar'); ?>
 
 <header>
@@ -31,7 +31,7 @@
 </main>
 
 <footer>
-  &copy; <?php echo date('Y') . ' ' . APP_TITLE; ?> &middot; Powered by <a href="<?php echo FW_PROJECT_URL; ?>" target="_blank" rel="noopener"><?php echo FW_NAME . (APP_ENV != 'prod' ? ' v' . FW_VER : ''); ?></a>
+  &copy; <?php echo date('Y') . ' ' . APP_TITLE; ?> &middot; <?php echo lang_html('POWERED_BY'); ?> <a href="<?php echo FW_PROJECT_URL; ?>" target="_blank" rel="noopener"><?php echo FW_NAME . (APP_ENV != 'prod' ? ' v' . FW_VER : ''); ?></a>
 </footer>
 
 <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>

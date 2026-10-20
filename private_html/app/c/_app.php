@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'lang.php';
+
 function auth_random_bytes($length)
 {
   if (function_exists('openssl_random_pseudo_bytes')) {
@@ -220,7 +222,7 @@ class App extends C
 
     if (!auth_csrf_valid($token)) {
       header('HTTP/1.1 400 Bad Request');
-      die('Invalid request token.');
+      die(lang('INVALID_REQUEST_TOKEN'));
     }
   }
 }
