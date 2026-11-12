@@ -51,7 +51,7 @@ if (PHP_SAPI !== 'cli' && (!defined('FAKE_CLI') || !FAKE_CLI)) {
 // Composer support ->
 $composer_autoload = ROOT . DS . 'vendor' . DS . 'autoload.php';
 if (file_exists($composer_autoload)) {
-    require_once $composer_autoload;
+  require_once $composer_autoload;
 }
 // <- Composer support
 
@@ -125,12 +125,22 @@ function db()
 
   mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-  $db = new mysqli(
-    DB_HOST,
-    DB_USER,
-    DB_PASS,
-    DB_NAME
-  );
+  if (defined('DB_PORT')) {
+    $db = new mysqli(
+      DB_HOST,
+      DB_USER,
+      DB_PASS,
+      DB_NAME,
+      DB_PORT
+    );
+  } else {
+    $db = new mysqli(
+      DB_HOST,
+      DB_USER,
+      DB_PASS,
+      DB_NAME
+    );
+  }
 
   if (defined('DB_CHAR')) {
     $db->set_charset(DB_CHAR);
