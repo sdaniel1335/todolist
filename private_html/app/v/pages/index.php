@@ -153,7 +153,7 @@
                         class="btn btn-outline-primary btn-sm task-icon-btn"
                         data-confirm="<?php echo lang_html('SAVE_CHANGES_TO_THIS_TODOIST_TASK'); ?>"
                         title="<?php echo lang_html('SAVE'); ?>"
-                      ><i class="bi bi-floppy"></i><span class="visually-hidden"><?php echo lang_html('SAVE'); ?></span></button>
+                      ><i class="bi bi-floppy2-fill"></i><span class="visually-hidden"><?php echo lang_html('SAVE'); ?></span></button>
 
                       <button
                         type="submit"
@@ -286,7 +286,7 @@
                       class="btn btn-outline-primary btn-sm task-icon-btn"
                       data-confirm="<?php echo lang_html('SAVE_CHANGES_TO_THIS_TODOLIST_TASK'); ?>"
                       title="<?php echo lang_html('SAVE'); ?>"
-                    ><i class="bi bi-floppy"></i><span class="visually-hidden"><?php echo lang_html('SAVE'); ?></span></button>
+                    ><i class="bi bi-floppy2-fill"></i><span class="visually-hidden"><?php echo lang_html('SAVE'); ?></span></button>
 
                     <button
                       type="submit"
