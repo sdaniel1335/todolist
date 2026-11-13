@@ -1,7 +1,7 @@
 <?php
 /**
  * File: topbar.php
- * File version: 0.1.1 (version of this file only, not the project)
+ * File version: 0.1.0 (version of this file only, not the project)
  * Shared VC Framework topbar. No translation or icon-library dependency.
  * DO NOT MODIFY THIS FILE. This prohibition applies to everyone,
  * including AI assistants, automated tools, and human contributors.
